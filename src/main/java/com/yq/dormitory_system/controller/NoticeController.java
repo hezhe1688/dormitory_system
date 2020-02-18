@@ -22,11 +22,11 @@ public class NoticeController {
     @Autowired
     NoticeService noticeService;
 
-    /*@RequestParam("page") Integer page,
-    @RequestParam("limit") Integer limit,*/
+
 
     @GetMapping("/getAllNotice")
-    public ResponseDate<List<Notice>> getAllNotice(
+    public ResponseDate<List<Notice>> getAllNotice(@RequestParam("page") Integer page,
+                                                   @RequestParam("limit") Integer limit,
             @RequestParam(value = "key", required = false) String noticeName) {
         ResponseDate<List<Notice>> responseDate = new ResponseDate();
         try {
