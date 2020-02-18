@@ -27,17 +27,17 @@ public class NoticeController {
 
     @GetMapping("/getAllNotice")
     public ResponseDate<List<Notice>> getAllNotice(
-                                         @RequestParam(value = "key", required = false) String noticeName) {
-        PageHelper.startPage(1, 5);
-        List<Notice> notices = noticeService.getAllNotice(noticeName);
-        PageInfo<Notice> pageInfo = new PageInfo<>(notices);
+            @RequestParam(value = "key", required = false) String noticeName) {
         ResponseDate<List<Notice>> responseDate = new ResponseDate();
-        if (pageInfo.getTotal() > 0) {
+        try {
+            PageHelper.startPage(1, 5);
+            List<Notice> notices = noticeService.getAllNotice(noticeName);
+            PageInfo<Notice> pageInfo = new PageInfo<>(notices);
             responseDate.setData(notices);
             responseDate.setCount(pageInfo.getTotal());
             responseDate.setMessage("查询成功");
             responseDate.setStatus(true);
-        }else {
+        } catch (Exception e) {
             responseDate.setMessage("查询失败");
             responseDate.setStatus(false);
         }
