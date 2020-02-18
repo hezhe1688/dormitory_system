@@ -1,0 +1,20 @@
+spring:
+  #禁用模板缓存
+  thymeleaf:
+    cache: false
+  #配置连接
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/dormitory_management_system?useSSL=false&useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.jdbc.Driver
+
+
+#整合mybatis
+mybatis:
+  config-location: classpath:mybatis/mybatisConfig.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+
+server:
+  port: 8080
