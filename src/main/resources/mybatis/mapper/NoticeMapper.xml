@@ -1,10 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yq.dormitory_system.mapper.NoticeMapper">
+    <!--public int insertNotice(Notice notice);-->
+    <insert id="insertNotice">
+        insert into t_notice(noticeName,noticeAuthor,noticeStatus,newsTime,content)
+        values(#{noticeName},#{noticeAuthor},#{noticeStatus},#{newsTime},#{content})
+    </insert>
+
+    <!--public int deleteNoticeById(@Param("ids") Integer[] ids);-->
+    <delete id="deleteNoticeById">
+        delete from t_notice
+        where id in
+        <foreach close=")" collection="ids" item="id" open="(" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
     <select id="getAllNotice" resultType="com.yq.dormitory_system.model.Notice">
         select * from t_notice where 1 = 1
         <if test="noticeName != null">
             and noticeName like concat(concat("%",#{noticeName}),"%")
         </if>
     </select>
+
+    <!--public int updateNotice(Notice notice);-->
+    <update id="updateNotice">
+        update t_notice
+        <set>
+            <if test="noticeName != null and noticeName !=''">
+                noticeName = #{noticeName},
+            </if>
+            <if test="noticeAuthor != null and noticeAuthor !=''">
+                noticeAuthor = #{noticeAuthor},
+            </if>
+            <if test="noticeStatus != null and noticeStatus !=''">
+                noticeStatus = #{noticeStatus},
+            </if>
+            <if test="newsTime != null">
+                newsTime = #{newsTime},
+            </if>
+            <if test="content != null and content !=''">
+                content = #{content},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

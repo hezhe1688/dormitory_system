@@ -2,8 +2,8 @@ package com.yq.dormitory_system.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.yq.dormitory_system.model.Notice;
-import com.yq.dormitory_system.service.NoticeService;
+import com.yq.dormitory_system.model.Repair;
+import com.yq.dormitory_system.service.RepairService;
 import com.yq.dormitory_system.tools.ResponseDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,19 +12,19 @@ import java.util.List;
 
 /**
  * @author 贺哲
- * @2020-02-18 10:51
+ * @2020-02-18 22:02
  */
 @RestController
-public class NoticeController {
+public class RepairController {
 
     @Autowired
-    NoticeService noticeService;
+    RepairService repairService;
 
-    @PostMapping("/insertNotice")
-    public ResponseDate<Integer> insertNotice(Notice notice) {
+    @PostMapping("/insertRepair")
+    public ResponseDate<Integer> insertRepair(Repair repair) {
         ResponseDate<Integer> responseDate = new ResponseDate();
         try {
-            int i = noticeService.insertNotice(notice);
+            int i = repairService.insertRepair(repair);
             responseDate.setData(i);
             responseDate.setStatus(true);
             responseDate.setMessage("新增成功");
@@ -35,11 +35,11 @@ public class NoticeController {
         return responseDate;
     }
 
-    @DeleteMapping("/deleteNoticeById")
-    public ResponseDate<Integer> deleteNoticeById(@RequestParam("ids") Integer[] ids) {
+    @DeleteMapping("/deleteRepairById")
+    public ResponseDate<Integer> deleteRepairById(@RequestParam("ids") Integer[] ids) {
         ResponseDate<Integer> responseDate = new ResponseDate();
         try {
-            int i = noticeService.deleteNoticeById(ids);
+            int i = repairService.deleteRepairById(ids);
             responseDate.setData(i);
             responseDate.setStatus(true);
             responseDate.setMessage("删除成功");
@@ -50,16 +50,16 @@ public class NoticeController {
         return responseDate;
     }
 
-    @GetMapping("/getAllNotice")
-    public ResponseDate<List<Notice>> getAllNotice(@RequestParam("page") Integer page,
-                                                   @RequestParam("limit") Integer limit,
-                                                   @RequestParam(value = "key", required = false) String noticeName) {
-        ResponseDate<List<Notice>> responseDate = new ResponseDate();
+
+    @GetMapping("/getAllRepair")
+    public ResponseDate<List<Repair>> getAllRepair(@RequestParam("page") Integer page,
+                                                   @RequestParam("limit") Integer limit) {
+        ResponseDate<List<Repair>> responseDate = new ResponseDate();
         try {
-            PageHelper.startPage(page, limit);
-            List<Notice> notices = noticeService.getAllNotice(noticeName);
-            PageInfo<Notice> pageInfo = new PageInfo<>(notices);
-            responseDate.setData(notices);
+            PageHelper.startPage(1, 5);
+            List<Repair> repairs = repairService.getAllRepair();
+            PageInfo<Repair> pageInfo = new PageInfo<>(repairs);
+            responseDate.setData(repairs);
             responseDate.setCount(pageInfo.getTotal());
             responseDate.setMessage("查询成功");
             responseDate.setStatus(true);
@@ -70,15 +70,16 @@ public class NoticeController {
         return responseDate;
     }
 
-    @PutMapping("/updateNotice")
-    public ResponseDate<Integer> updateNotice(Notice notice) {
+    @PutMapping("/updateRepair")
+    public ResponseDate<Integer> updateRepair(Repair repair) {
         ResponseDate<Integer> responseDate = new ResponseDate();
         try {
-            int i = noticeService.updateNotice(notice);
+            int i = repairService.updateRepair(repair);
             responseDate.setData(i);
             responseDate.setStatus(true);
             responseDate.setMessage("修改成功");
         } catch (Exception e) {
+            e.printStackTrace();
             responseDate.setStatus(false);
             responseDate.setMessage("修改失败");
         }

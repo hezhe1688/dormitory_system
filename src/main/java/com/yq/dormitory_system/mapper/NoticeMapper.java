@@ -13,9 +13,33 @@ import java.util.List;
 @Repository("noticeMapper")
 public interface NoticeMapper {
     /**
+     * 新增公告
+     *
+     * @param notice
+     * @return
+     */
+    public int insertNotice(Notice notice);
+
+    /**
+     * 根据ID进行一个或多个删除
+     *
+     * @param ids
+     * @return
+     */
+    public int deleteNoticeById(@Param("ids") Integer[] ids);
+
+    /**
      * 查询所有公告信息
+     *
      * @param noticeName 根据标题名称查
      * @return
      */
     public List<Notice> getAllNotice(@Param("noticeName") String noticeName);
+
+    /**
+     * 修改
+     * @param notice
+     * @return
+     */
+    public int updateNotice(Notice notice);
 }

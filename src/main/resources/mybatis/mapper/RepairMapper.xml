@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yq.dormitory_system.mapper.RepairMapper">
+    <insert id="insertRepair">
+        insert into t_repair(floor,hostelNum,`type`,repairTime,`describe`)
+        values(#{floor},#{hostelNum},#{type},#{repairTime},#{describe})
+    </insert>
+
+    <delete id="deleteRepairById">
+        delete from t_repair
+        where id in
+        <foreach close=")" collection="ids" item="id" open="(" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getAllRepair" resultType="com.yq.dormitory_system.model.Repair">
+        select * from t_repair
+    </select>
+
+    <update id="updateRepair">
+        update t_repair
+        <set>
+            <if test="floor != null and floor !=''">
+                floor = #{floor},
+            </if>
+            <if test="hostelNum != null and hostelNum !=''">
+                hostelNum = #{hostelNum},
+            </if>
+            <if test="type != null and type !=''">
+                `type` = #{type},
+            </if>
+            <if test="repairTime != null">
+                repairTime = #{repairTime},
+            </if>
+            <if test="describe != null and describe !=''">
+                `describe` = #{describe},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
