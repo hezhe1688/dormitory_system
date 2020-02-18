@@ -10,5 +10,5 @@ import java.util.List;
  * @2020-02-18 10:47
  */
 public interface NoticeService {
-    public List<Notice> getAllNotice(Integer id, String noticeName);
+    public List<Notice> getAllNotice(String noticeName);
 }

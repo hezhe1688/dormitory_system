@@ -3,9 +3,6 @@
 <mapper namespace="com.yq.dormitory_system.mapper.NoticeMapper">
     <select id="getAllNotice" resultType="com.yq.dormitory_system.model.Notice">
         select * from t_notice where 1 = 1
-        <if test="id != null">
-            and id = #{id}
-        </if>
         <if test="noticeName != null">
             and noticeName like concat(concat("%",#{noticeName}),"%")
         </if>

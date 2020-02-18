@@ -14,9 +14,8 @@ import java.util.List;
 public interface NoticeMapper {
     /**
      * 查询所有公告信息
-     * @param id 根据ID查
      * @param noticeName 根据标题名称查
      * @return
      */
-    public List<Notice> getAllNotice(@Param("id") Integer id, @Param("noticeName") String noticeName);
+    public List<Notice> getAllNotice(@Param("noticeName") String noticeName);
 }

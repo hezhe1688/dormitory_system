@@ -17,7 +17,7 @@ public class NoticeServiceImpl implements NoticeService {
     NoticeMapper noticeMapper;
 
     @Override
-    public List<Notice> getAllNotice(Integer id, String noticeName) {
-        return noticeMapper.getAllNotice(id, noticeName);
+    public List<Notice> getAllNotice(String noticeName) {
+        return noticeMapper.getAllNotice(noticeName);
     }
 }

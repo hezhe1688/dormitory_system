@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yq.dormitory_system.model.Notice;
 import com.yq.dormitory_system.service.NoticeService;
+import com.yq.dormitory_system.tools.ResponseDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,13 +22,25 @@ public class NoticeController {
     @Autowired
     NoticeService noticeService;
 
+    /*@RequestParam("page") Integer page,
+    @RequestParam("limit") Integer limit,*/
+
     @GetMapping("/getAllNotice")
-    public PageInfo<Notice> getAllNotice(
-                                         @RequestParam(value = "id", required = false) Integer id,
-                                         @RequestParam(value = "noticeName", required = false) String noticeName) {
+    public ResponseDate<List<Notice>> getAllNotice(
+                                         @RequestParam(value = "key", required = false) String noticeName) {
         PageHelper.startPage(1, 5);
-        List<Notice> notices = noticeService.getAllNotice(id, noticeName);
+        List<Notice> notices = noticeService.getAllNotice(noticeName);
         PageInfo<Notice> pageInfo = new PageInfo<>(notices);
-        return pageInfo;
+        ResponseDate<List<Notice>> responseDate = new ResponseDate();
+        if (pageInfo.getTotal() > 0) {
+            responseDate.setData(notices);
+            responseDate.setCount(pageInfo.getTotal());
+            responseDate.setMessage("查询成功");
+            responseDate.setStatus(true);
+        }else {
+            responseDate.setMessage("查询失败");
+            responseDate.setStatus(false);
+        }
+        return responseDate;
     }
 }
