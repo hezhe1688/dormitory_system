@@ -51,11 +51,12 @@ public class DormitoryController {
     }
 
     @GetMapping("/getAllDormitory")
-    public ResponseDate<List<Dormitory>> getAllDormitory(
-            @RequestParam(value = "key", required = false) String floor) {
+    public ResponseDate<List<Dormitory>> getAllDormitory(@RequestParam("page") Integer page,
+                                                         @RequestParam("limit") Integer limit,
+                                                         @RequestParam(value = "key", required = false) String floor) {
         ResponseDate<List<Dormitory>> responseDate = new ResponseDate();
         try {
-            PageHelper.startPage(1, 5);
+            PageHelper.startPage(page, limit);
             List<Dormitory> dormitories = dormitoryService.getAllDormitory(floor);
             PageInfo<Dormitory> pageInfo = new PageInfo<>(dormitories);
             responseDate.setData(dormitories);

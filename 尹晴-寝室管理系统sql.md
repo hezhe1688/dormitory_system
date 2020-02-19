@@ -44,3 +44,23 @@ create table t_dormitory
 comment '宿舍楼表';
 ```
 
+```mysql
+create table t_students
+(
+   id int auto_increment comment 'id',
+   stuName varchar(10) null comment '姓名',
+   sex varchar(4) null comment '性别',
+   sid varchar(20) null comment '学号',
+   stuClass varchar(20) null comment '班级
+',
+   floor int null comment '楼栋',
+   hostelNum int null comment '宿舍号',
+   isIn boolean null comment '是否归寝',
+   checkInTime varchar(10) null comment '签到时间',
+   isLate boolean null comment '是否迟到',
+   constraint t_students_pk
+      primary key (id)
+)
+comment '学生信息表';
+```
+
