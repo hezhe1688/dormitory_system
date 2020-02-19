@@ -28,3 +28,19 @@ create table t_notice
 comment '公告管理表';
 ```
 
+```mysql
+create table t_dormitory
+(
+   id int auto_increment comment 'id',
+   floor int null comment '楼栋',
+   dormitories int null comment '宿舍间数',
+   num int null comment '居住人数',
+   bedtime varchar(10) null comment '熄灯时间',
+   checkTime varchar(10) null comment '就寝时间',
+   periphery varchar(255) null comment '寝室楼周边描述',
+   constraint t_dormitory_pk
+      primary key (id)
+)
+comment '宿舍楼表';
+```
+
