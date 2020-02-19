@@ -64,3 +64,16 @@ create table t_students
 comment '学生信息表';
 ```
 
+```mysql
+create table t_user
+(
+   id int auto_increment comment 'id',
+   username varchar(10) null comment '用户名',
+   password varchar(30) null comment '密码',
+   uNum varchar(20) null comment '学生或老师号',
+   constraint t_user_pk
+      primary key (id)
+)
+comment '用户表';
+```
+

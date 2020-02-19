@@ -39,4 +39,6 @@ public interface StudentsService {
     public int noSignedIn();
 
     public int updateStudents(Students students);
+
+    public int signIn(Students students);
 }

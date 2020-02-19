@@ -42,4 +42,11 @@ public interface StudentsMapper {
 
     public int updateStudents(Students students);
 
+    /**
+     * 签到
+     *
+     * @return
+     */
+    public int signIn(Students students);
+
 }

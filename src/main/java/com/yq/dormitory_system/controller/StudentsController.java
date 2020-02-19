@@ -3,11 +3,14 @@ package com.yq.dormitory_system.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yq.dormitory_system.model.Students;
+import com.yq.dormitory_system.model.User;
 import com.yq.dormitory_system.service.StudentsService;
+import com.yq.dormitory_system.service.UserService;
 import com.yq.dormitory_system.tools.ResponseDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,18 +24,20 @@ public class StudentsController {
     @Autowired
     private StudentsService studentsService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/insertStudents")
     public ResponseDate<Integer> insertStudents(Students students) {
+        User user = new User();
+        user.setUsername(students.getStuName()).setPassword("123456").setUNum(students.getSid());
         ResponseDate<Integer> responseDate = new ResponseDate();
-        /*Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        students.setCheckInTime(hour + ":" + minute);*/
         students.setCheckInTime("");
         students.setIn(false);
         students.setLate(false);
         try {
             int i = studentsService.insertStudents(students);
+            userService.insertUser(user); //新增登录表
             responseDate.setData(i);
             responseDate.setStatus(true);
             responseDate.setMessage("新增成功");
@@ -114,6 +119,32 @@ public class StudentsController {
             responseDate.setMessage("查询失败");
         }
         return responseDate;
+    }
 
+    /**
+     * 点击签到
+     *
+     * @param sid 学号
+     */
+    @PutMapping("/signIn")
+    public ResponseDate<Integer> signIn(@RequestParam("key") String sid) {
+        ResponseDate<Integer> responseDate = new ResponseDate();
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        Students students = new Students();
+        students.setSid(sid).setCheckInTime(hour + ":" + minute);
+        students.setIn(true);  //点击签到之后默认改变为归寝
+        students.setLate((hour > 22) ? false : true);  //默认22：00为就寝时间
+        try {
+            int i = studentsService.signIn(students);
+            responseDate.setData(i);
+            responseDate.setStatus(true);
+            responseDate.setMessage("签到成功");
+        } catch (Exception e) {
+            responseDate.setStatus(false);
+            responseDate.setMessage("签到失败");
+        }
+        return responseDate;
     }
 }

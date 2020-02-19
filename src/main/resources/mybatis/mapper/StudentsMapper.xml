@@ -66,4 +66,39 @@
         </set>
         where id = #{id}
     </update>
+
+    <!--public int signIn(String uNum);-->
+    <update id="signIn">
+        update t_students
+        <set>
+            <if test="stuName != null and stuName !=''">
+                stuName = #{stuName},
+            </if>
+            <if test="sex != null and sex !=''">
+                sex = #{sex},
+            </if>
+            <if test="sid != null and sid !=''">
+                sid = #{sid},
+            </if>
+            <if test="stuClass != null">
+                stuClass = #{stuClass},
+            </if>
+            <if test="floor != null">
+                floor = #{floor},
+            </if>
+            <if test="hostelNum != null">
+                hostelNum = #{hostelNum},
+            </if>
+            <if test="isIn != null">
+                isIn = #{isIn},
+            </if>
+            <if test="checkInTime != null">
+                checkInTime = #{checkInTime},
+            </if>
+            <if test="isLate != null">
+                isLate = #{isLate},
+            </if>
+        </set>
+        where sid = #{sid}
+    </update>
 </mapper>
